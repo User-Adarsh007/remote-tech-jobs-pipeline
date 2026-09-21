@@ -38,6 +38,15 @@ An end-to-end data pipeline that extracts remote tech job listings daily, standa
 
 5\. \*\*Serve:\*\* Streamlit queries the updated database on load to display top skills, salary metrics, and filterable job roles.
 
+```mermaid
+graph LR
+    A[RemoteOK API] -->|Extract| B(pipeline.py)
+    B -->|Clean & Transform| C[(SQLite DB)]
+    D[GitHub Actions Cron] -->|Triggers Daily| B
+    C -->|Read Data| E[Streamlit Dashboard]
+    E -->|Serve| F[End User Browser]
+```
+
 
 
 \## 💻 Local Setup

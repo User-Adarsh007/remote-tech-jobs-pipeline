@@ -57,7 +57,7 @@ cols_to_show = ['date', 'company', 'position', 'location', 'salary_min', 'salary
 st.dataframe(
     filtered[cols_to_show],
     column_config={
-        "date": st.column_config.TextColumn("Date Posted"),
+        "date": st.column_config.DateColumn("Date Posted", format="YYYY-MM-DD"),
         "company": st.column_config.TextColumn("Company"),
         "position": st.column_config.TextColumn("Position"),
         "location": st.column_config.TextColumn("Location"),

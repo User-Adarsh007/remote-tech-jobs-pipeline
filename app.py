@@ -51,9 +51,20 @@ filtered = df.copy()
 if search:
     filtered = filtered[filtered['position'].str.contains(search, case=False, na=False) | filtered['company'].str.contains(search, case=False, na=False)]
 
+# Include 'date' and configure headers
+cols_to_show = ['date', 'company', 'position', 'location', 'salary_min', 'salary_max', 'apply_url']
+
 st.dataframe(
-    filtered[['company', 'position', 'location', 'salary_min', 'salary_max', 'apply_url']],
-    column_config={"apply_url": st.column_config.LinkColumn("Apply Link")},
+    filtered[cols_to_show],
+    column_config={
+        "date": st.column_config.TextColumn("Date Posted"),
+        "company": st.column_config.TextColumn("Company"),
+        "position": st.column_config.TextColumn("Position"),
+        "location": st.column_config.TextColumn("Location"),
+        "salary_min": st.column_config.NumberColumn("Min Salary", format="$%d"),
+        "salary_max": st.column_config.NumberColumn("Max Salary", format="$%d"),
+        "apply_url": st.column_config.LinkColumn("Apply Link")
+    },
     hide_index=True,
     use_container_width=True
 )

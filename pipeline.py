@@ -80,7 +80,7 @@ def transform_jobs(raw_jobs):
         df['tags'] = df['tags'].apply(lambda x: ', '.join(x) if isinstance(x, list) else str(x))
         
     if 'date' in df.columns:
-        df['date'] = pd.to_datetime(df['date'])
+        df['date'] = pd.to_datetime(df['date'], errors='coerce', utc=True).dt.strftime('%Y-%m-%d')
         
     if 'location' in df.columns:
         df['location'] = df['location'].apply(clean_location)
@@ -94,6 +94,9 @@ def transform_jobs(raw_jobs):
         'location', 'salary_min', 'salary_max', 'description', 'apply_url'
     ]
     final_df = df[[col for col in target_cols if col in df.columns]].copy()
+    # Sort newest jobs to the top
+    if 'date' in final_df.columns:
+        final_df = final_df.sort_values(by='date', ascending=False)
     
     print(f"Transformation complete. {len(final_df)} clean rows ready for loading.")
     return final_df

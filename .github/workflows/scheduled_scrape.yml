@@ -2,7 +2,7 @@ name: Daily Remote Job Pipeline
 
 on:
   schedule:
-    # Runs daily at 07:00 UTC (12:30 PM IST)
+    # Runs every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
     - cron: '0 */6 * * *'
   workflow_dispatch: # Allows you to manually trigger the workflow anytime from the GitHub Actions tab
 
